@@ -9,6 +9,20 @@
 	"categories": [
 		"Other"
 	],
+	"activationEvents": [
+		"onWebviewEditor:htmlaser.container"
+	  ],
+	"contributes": {
+		"webviewEditors": [ {
+			"viewType": "htmlaser.container",
+			"displayName": "HTMLaser Editor",
+			"discretion": "default",
+			"selector": [ {
+				"filenamePattern": "*.{htm,html}",
+				"mime": "text/html"
+			} ]
+		} ]
+	},
 	"main": "./out/extension.js",
 	"enableProposedApi": true,
 	"scripts": {
