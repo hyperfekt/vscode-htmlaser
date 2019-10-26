@@ -28,11 +28,13 @@ export class Container implements vscode.Disposable {
 
         // load HTML appended with a script-injecting tag into webview
         vscode.workspace.openTextDocument(resource).then((document) => {
-            webviewEditor.webview.html = document.getText() + `
+            // the script needs to be called before the body for the injected base tag to affect elements present in it
+            webviewEditor.webview.html = `
             <script
                 type="text/javascript"
                 src="${webviewEditor.webview.asWebviewUri(extensionRoot.with({ path: extensionRoot.path + '/resources/pump.js' }))}"
-            </script>`;
+                data-root="${webviewEditor.webview.asWebviewUri(resourceRoot)}">
+            </script>` + document.getText();
         });
 
         this.register(webviewEditor.onDidDispose(() => this.dispose()));
